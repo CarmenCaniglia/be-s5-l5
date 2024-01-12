@@ -75,17 +75,24 @@ public class MyRunner implements CommandLineRunner {
         }
 
         //----RESERVATIONS
-        /*List<User> users = userService.findAll();
+        /* List<User> users = userService.findAll();
         List<Workstation> workstations = workstationService.findAll();
         if (!users.isEmpty() && !workstations.isEmpty()) {
-            User randomUser = users.get(rndm.nextInt(users.size()));
-            Workstation randomWorkstation = workstations.get(rndm.nextInt(workstations.size()));
+            User randomUser = users.get(new Random().nextInt(users.size()));
+            Workstation randomWorkstation = workstations.get(new Random().nextInt(workstations.size()));
 
-            Reservation newReservation = new Reservation(randomUser, randomWorkstation);
+            LocalDate randomDate = generateRandomDate();
+            Reservation newReservation = new Reservation(randomUser, randomWorkstation, randomDate);
             reservationService.saveReservation(newReservation);
             System.out.println("Created reservation: " + newReservation);
         } else {
             System.out.println("No users or workstations available to create reservations.");
-        }*/
+        }
+
+        private LocalDate generateRandomDate() {
+        LocalDate start = LocalDate.now();
+        long days = (long) (Math.random() * 365); // Numero casuale di giorni (fino a un anno)
+        return start.plusDays(days);
+       }*/
     }
 }
