@@ -1,18 +1,17 @@
 package carmencaniglia.bes5l5;
 
 import carmencaniglia.bes5l5.dao.BuildingService;
+import carmencaniglia.bes5l5.dao.ReservationService;
 import carmencaniglia.bes5l5.dao.UserService;
 import carmencaniglia.bes5l5.dao.WorkstationService;
-import carmencaniglia.bes5l5.entities.Building;
-import carmencaniglia.bes5l5.entities.User;
-import carmencaniglia.bes5l5.entities.Workstation;
-import carmencaniglia.bes5l5.entities.WorkstationType;
+import carmencaniglia.bes5l5.entities.*;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -22,10 +21,14 @@ public class MyRunner implements CommandLineRunner {
     BuildingService buildingService;
     @Autowired
     WorkstationService workstationService;
+    @Autowired
+    ReservationService reservationService;
 
     @Override
     public void run(String... args) throws Exception {
         Faker faker = new Faker();
+        Random rndm = new Random();
+
         String name = faker.name().firstName();
         String surname = faker.name().lastName();
         String username = name.toLowerCase() + "." + surname.toLowerCase();
@@ -58,17 +61,31 @@ public class MyRunner implements CommandLineRunner {
 
         //------WORKSTATIONS
         List<Building> buildings = buildingService.findAll();
+        if (!buildings.isEmpty()) {
+            Building randomBuilding = buildings.get(rndm.nextInt(buildings.size()));
+            String workstationDescription = faker.lorem().sentence();
+            int maxPeoples = rndm.nextInt(10) + 1;
+            WorkstationType type = WorkstationType.values()[rndm.nextInt(WorkstationType.values().length)];
 
-        if(!buildings.isEmpty()){
-            Building rndmBuilding = buildings.get(faker.number().numberBetween(0, buildings.size()));
-            String description = faker.lorem().sentence();
-            int peoples = faker.number().numberBetween(1,50);
-
-            Workstation newWorkstation = new Workstation(description, WorkstationType.MEETING_ROOM,peoples,rndmBuilding);
+            Workstation newWorkstation = new Workstation(workstationDescription, type, maxPeoples, randomBuilding);
             workstationService.save(newWorkstation);
             System.out.println("Created workstation: " + newWorkstation);
-        }else{
-            System.err.println("No buildings found to associate with workstations.");
+        } else {
+            System.out.println("No buildings available to create workstations.");
         }
+
+        //----RESERVATIONS
+        /*List<User> users = userService.findAll();
+        List<Workstation> workstations = workstationService.findAll();
+        if (!users.isEmpty() && !workstations.isEmpty()) {
+            User randomUser = users.get(rndm.nextInt(users.size()));
+            Workstation randomWorkstation = workstations.get(rndm.nextInt(workstations.size()));
+
+            Reservation newReservation = new Reservation(randomUser, randomWorkstation);
+            reservationService.saveReservation(newReservation);
+            System.out.println("Created reservation: " + newReservation);
+        } else {
+            System.out.println("No users or workstations available to create reservations.");
+        }*/
     }
 }
