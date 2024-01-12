@@ -53,4 +53,20 @@ public class UserService {
         return userDAO.count();
     }
 
+    //-->implementazione queries
+    public List<User> getUserByUsername(String username) {
+        return userDAO.findByUsername(username);
+    }
+
+    public List<User> filterBySurname(String surname) {
+        return userDAO.findBySurname(surname);
+    }
+
+    public List<User> getUsersByEmailContaining(String ex) {
+        return userDAO.findByEmailContaining(ex);
+    }
+
+    public List<User> getUsersByNameAndSurname(String name, String surname) {
+        return userDAO.findByNameAndSurname(name, surname);
+    }
 }

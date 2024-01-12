@@ -30,5 +30,10 @@ public class MyRunner implements CommandLineRunner {
         }catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+
+        System.out.println("Users with the surname Bros: " + userService.filterBySurname("Bros"));
+        System.out.println("Users with email containing 'gmail': " + userService.getUsersByEmailContaining("gmail"));
+        System.out.println("User with name 'Mario' and surname 'Bros': " + userService.getUsersByNameAndSurname("Mario", "Bros"));
+
     }
 }
