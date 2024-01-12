@@ -1,7 +1,6 @@
 package carmencaniglia.bes5l5.dao;
 
 import carmencaniglia.bes5l5.entities.Building;
-import carmencaniglia.bes5l5.entities.User;
 import carmencaniglia.bes5l5.exceptions.ItemNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

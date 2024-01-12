@@ -14,10 +14,6 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
 
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
     public void save(User user){
     if (user.getName().length()<2) throw new RuntimeException("the name must have more than two letters!");
     userDAO.save(user);
