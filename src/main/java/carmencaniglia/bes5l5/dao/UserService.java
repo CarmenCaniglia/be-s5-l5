@@ -7,17 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 public class UserService {
     @Autowired
     private UserDAO userDAO;
+
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
     public void save(User user){
     if (user.getName().length()<2) throw new RuntimeException("the name must have more than two letters!");
     userDAO.save(user);
-    log.info("User correctly saved");
+    log.info("User correctly saved!");
     }
 
     public User findById(long id){

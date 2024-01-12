@@ -1,22 +1,21 @@
 package carmencaniglia.bes5l5.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Workstations")
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Workstation {
     @Id
     @GeneratedValue
+    @Column(name = "workstation_id",nullable = false)
     private long id;
     private String description;
     @Enumerated(EnumType.STRING)
